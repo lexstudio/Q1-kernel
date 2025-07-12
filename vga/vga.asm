@@ -1,0 +1,2 @@
+	movk rax ro 
+
