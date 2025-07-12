@@ -1,2 +1,3 @@
-# Tell Linguist that files with extension .xyz are MyLang
 *.BIN64 linguist-language=Binarie64 linguist-detectable
+*.l    linguist-language=Binarie64 linguist-detectable
+*.asm  linguist-language=Binarie64 linguist-detectable
