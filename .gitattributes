@@ -1,3 +1,3 @@
 *.BIN64 linguist-language=Binarie64 linguist-detectable
-*.l    linguist-language=Lasm linguist-detectable
+*.l    linguist-language=Lasm linguist-detectable:contentReference[oaicite:1]{index=1}
 *.asm  linguist-language=Assembly linguist-detectable
