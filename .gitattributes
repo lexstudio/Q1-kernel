@@ -1,4 +1,4 @@
-*.BIN64 linguist-language=Rust linguist-detectable
-*.l     linguist-language=Assembly linguist-detectable
-*.asm   linguist-language=Rust linguist-detectable
-*.s     linguist-language=Rust linguist-detectable
+*.BIN64 linguist-language=Shell linguist-detectable
+*.l     linguist-language=Lex linguist-detectable
+*.asm   linguist-language=Assembly linguist-detectable
+*.s     linguist-language=Assembly linguist-detectable
