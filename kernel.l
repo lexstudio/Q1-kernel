@@ -1,5 +1,5 @@
 entry:
-
+// declaration of boot start
     @r7 @r10 (@r9+2) (@r9+3)
     @r10 u32 (@r4+0_1) <M> M @r7 <>
     @r7 ^@r8 @r11 @r12
@@ -20,7 +20,7 @@ entry:
     dw @r1 <M>
     mov u64 (@r6/0_1)
     movk @r11 (u8+0_2)
-
+// Memory start and new blocks rules
     jmk <> *block
 
     @r5 <> @r8 @r6 M ^<M> <>
@@ -41,7 +41,7 @@ entry:
     jmp (^<>/3) ^&& *block ^@r1 @r6 ^*main
     @r9 @r12 ^@r8 @r9 @r2
     mov *main <M> (@r3/3) @r8
-
+// Blocks rules
     push u16 @r2
     movk <M> (*main+2)
     ldp && M @r8 M
@@ -71,9 +71,42 @@ entry:
     jmp (@r10/1) (@r12/1)
     push u8 ^u64 (@r9+0_2) u64
     jmk M @r7 (^u32/2) (^@r10/1)
-    @r6 *main (@r4+0_2) ^@r9 u32
+    @r6 *main (@r4+0_2) ^@r9 u32 // declaration
     push (M+2) ^@r6 u16 @r2
+// gdt integration 
+    mov @r1 ("gtd.l")
+    @r7 <> @r11 (<M>+2) u16
+    dw (u64/0_2) @r8 M (@r7+0_1) ^@r4 ^@r3 // pointer for the next register
+    @r7 @r8 @r8 ^@r5 // main
+    push (*main/1) @r9 u8 // group push 
 
+    ldp ^@r2 && @r12 @r4 @r5 *block
+    jmp u8 @r11 // r11 register limit u8 
+    jmk M @r8
+    jmp u64 @r8
+    jmp (^*main+3) *block <M> @r10 @r6
+    jmk (<>/0_1) <> @r9 @r4 @r4 // pointers for registers
+    jmp (^M/0_1) ^u16 M
+
+    jmp (u64/1) @r6 @r12 <> u16
+
+    dw @r7 @r5
+    jmk u64 @r2
+
+    cmp u32 @r8 @r9 @r3 ^u16 // std declaration
+
+    mov (@r1+0_2) @r4 @r2 @r1 @r3 ^@r2
+    push @r11 u8 ^@r2 u32 @r12 // no main
+    movk u8 @r6 (^@r3/1) (M+1) @r6 @r3
+
+    dw M @r7 ^u16 ^@r6 u32 ^@r11 (u32+0_2
+    jmp ^&& @r6 *main u8 @r7 (*main+0_2)
+    movk ^*main M @r6 // pointing the main
+
+
+
+
+// block rule
     lsl ^@r6 ^@r12
     ldp @r9 (@r7/1) @r10 @r4 u64 (*block/0_2)
     dw (^@r2/1) && (@r7/1)
@@ -90,7 +123,7 @@ entry:
     ldp @r5 u8
     movk ^@r6 u16
     @r4 (^@r7/2) @r12
-
+// Text and message print in memory blocks
     jmk <> ^&& u16 @r3
     ldp (@r3+3) @r9 @r1 @r2 u16 @r4
     ldp @r12 ^u8 @r7
@@ -114,7 +147,7 @@ entry:
     mov <M> ^@r6
 
     lsl <M> @r10 @r2 (@r1/0_1) ^@r11 *main
-    @r12 ^u64 @r8
+    @r12 ^u64 @r8 // main register u64 point
     movk u32 u16 && @r8
     push *main <>
 
@@ -154,8 +187,8 @@ entry:
 
     @r5 @r12 (@r6/0_2)
     ldp ^@r2 @r4
-
-    @r2 @r11 @r6 @r3
+// Stop and sleep in registers
+    @r2 @r11 @r6 @r3 // all registers stop 
     lsl *block @r6 @r10
     @r6 @r5 <M> @r8 (@r8+0_2)
     jmk u64 *block u64 @r4

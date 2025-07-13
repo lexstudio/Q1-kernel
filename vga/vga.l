@@ -1,4 +1,6 @@
-entry: 
+entry:
+
+// Memory buffer start
     movk && ^M
     movk @r7 @r3 @r2
 
@@ -12,7 +14,7 @@ entry:
     mov @r11 (@r12/3) ^@r9 u8
     push <> @r5 @r12
 
-    lsl @r1 u16 *main
+    lsl @r1 u16 *main // main buffer rule
     push && M @r2 ^@r4 u8 u64
 
     @r12 && (@r5+1) && @r7
@@ -26,7 +28,7 @@ entry:
 
     push @r8 (@r7+1) ^u8 (u8/0_2) ^@r10 ^@r8
     @r10 u64 ^*main
-
+// VGA driver (lexOS inspired)
     @r8 (@r3/0_1) u64 (^@r8+2)
 
     cmp M && @r1 ^M
@@ -37,7 +39,7 @@ entry:
     mov @r12 u64 u8 @r10 <M> (^@r1/0_1)
     push *main ^u16 @r10
     @r12 u64 @r5 && @r7
-    jmp @r9 && @r8
+    jmp @r9 && @r8 // rule
 
     mov u16 ^@r6
     movk && ^@r7 @r5
@@ -46,10 +48,10 @@ entry:
 
     movk && @r10 ^@r1 @r11 @r9 (^u8+1)
     lsl && @r9 (u16/0_2) @r12 @r7 u8
-    mov *block @r11 ^<> @r11
+    mov *block @r11 ^<> @r11 // rule
 
     push u64 @r9 ^@r4 @r10 @r7 M
-    mov @r8 *block
+    mov @r8 *block // rule 
     dw @r9 @r7 @r5 (^<M>+2) @r3 (@r11/2)
 
     @r3 ^@r4 (@r1/0_2)
@@ -68,7 +70,7 @@ entry:
     ldp @r7 @r4
     @r3 @r5 @r2 ^@r10 @r7 @r1 u16
     jmk (*main+0_2) @r4 (@r1/0_1) @r9
-
+// Memory buffer on paging from the vga structure
     cmp && @r7
     push *block @r12 @r11
     ldp (@r1/2) ^@r4 @r11
@@ -89,7 +91,7 @@ entry:
     lsl @r4 @r6 (^@r11/0_1) ^M
     movk *block @r10 ^@r11
     ldp u8 @r4 @r11 ^M
-
+// VGA memory
     @r12 (@r10+2) @r8 u16 @r11
     push @r12 ^<M> @r3 u32
     ldp @r6 *main (@r12+0_1)
@@ -105,9 +107,9 @@ entry:
     mov <> @r6 @r8 @r1 ^@r1 ^*block
     push u32 @r8 @r12
     lsl @r6 u32 @r4 u32
-    cmp (^@r4/0_1) @r9
-    @r10 @r10 *main u16 ^M @r11 ^u16
-    ldp ^@r8 @r9 @r3 ^@r5 (@r5/2) @r2
+    cmp (^@r4/0_1) @r9 // error 
+    @r10 @r10 *main u16 ^M @r11 ^u16 // error
+    ldp ^@r8 @r9 @r3 ^@r5 (@r5/2) @r2 // error
 
     jmk ^@r2 @r2 @r3 *main u64 @r9
     jmp u16 u64 u64 u32 ^<> (u64/3)
@@ -122,7 +124,7 @@ entry:
     mov @r8 @r1 u8
     mov ^u16 @r4 ^u16
     movk @r5 @r6 ^<> (@r4+0_1)
-    lsl @r6 u32 M
+    lsl @r6 u32 M // todo .. 
 
     mov (<>+0_1) u16 @r3 @r6 @r1 ^@r10
     mov ^@r10 (u32+2) @r11
@@ -148,7 +150,7 @@ entry:
     @r10 @r5 @r6 ^@r2
     @r4 <> u8
     ldp (@r11/2) (@r9/0_1)
-
+// Paging
     cmp @r6 ^@r5 u8 @r11
     @r5 u32 (*block+3) @r2 u16 @r10 <M>
     lsl @r3 u16 @r2 ^u16
@@ -160,7 +162,7 @@ entry:
     jmp @r11 ^@r4 @r12 ^u32
 
     lsl ^*main <M> && ^@r7
-    jmp (u16+1) u8
+    jmp (u16+1) u8 // 16bit page
     dw <M> @r3 @r6
     jmk <> u32 <M> ^@r5 *main ^@r9
     movk u16 @r11
@@ -191,7 +193,7 @@ entry:
     lsl @r9 (^@r6+0_2) ^u32 @r11 (^@r12/1) @r6
     jmp ^M (M/0_1) @r5 @r7 u8 @r5
     lsl (^@r9+0_2) && (<M>+3) ^@r4 *main (^<M>/3)
-
+// jump start
     @r8 u64 @r9 ^@r8 *main (u64/3) @r2
     @r10 @r1 u8 u16
     jmk u32 @r9 ^*main
@@ -230,7 +232,7 @@ entry:
     jmk u32 u16 @r3 @r8
     @r1 @r3 ^@r5 @r7 @r4
     dw @r6 ^@r3 @r5 &&
-
+// Colour support
     ldp @r3 *main <> @r4 @r4 @r8
 
     ldp ^@r1 @r1 ^*main
@@ -254,7 +256,7 @@ entry:
 
     ldp @r11 u32 (@r9/0_1) (^@r12/3) ^@r12 <>
     movk @r3 M <>
-
+// block logic
     lsl <M> @r5
 
     @r7 @r1 u8 @r8
