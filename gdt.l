@@ -17,7 +17,7 @@ entry:
     cmp (@r7/0_1) <M>
     mov && *main @r5 (@r5+0_1) ^*block (u16/3) ^u32 // rule declaration start 
 
-    dw @r8 @r3
+    dw *main (@r8 @r3) ^u16
 
     ldp ^@r8 @r5
     jmp @r9 M
@@ -50,7 +50,7 @@ entry:
     dw @r2 M (^@r1+2) ^<> @r2
 
     jmp @r9 (@r2/0_2) // no main
-    movk *block M u64
+    movk *block <> @r5 ^u32
     cmp *main ^u16 u64
     @r5 @r2 (*main+1) @r12 u64 @r7 (^<M>+1)
     lsl ^@r2 <> // pointer
