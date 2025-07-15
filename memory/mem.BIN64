@@ -1,0 +1,22 @@
+                             **************************************************************
+                             * Language-Specific Data Area                                *
+                             **************************************************************
+                             lsda_exception_table_00ab1150                   XREF[1]:     00a449e1(*)  
+        00ab1152 8a              dwfenc     DW_EH_PE_omit | DW_EH_PE_omit                    (LSDA) LPStart Encoding
+        00ab1151 9c              dwfenc     DW_EH_PE_sdata16 | DW_EH_PE_pcrel | DW_EH_PE_in   (LSDA) TType Encoding
+        00ab1152 09              uleb128    9h                                               (LSDA) TType Offset
+        00ab1153 01              dwfenc     DW_EH_PE_uleb128 | DW_EH_PE_absptr               (LSDA) Call Site Table Encoding
+        00ab1154 04              uleb128    4h                                               (LSDA) Call Site Table Length
+                             **************************************************************
+                             * (LSDA) Call Site Record                                    *
+                             **************************************************************
+        00ab1155 08              uleb128    LAB_007659fc                                     (LSDA Call Site) IP Offset
+        00ab1156 04              uleb128    4h                                               (LSDA Call Site) IP Range Length
+        00ab1157 14              uleb128    LAB_00765a08                                     (LSDA Call Site) Landing Pad Add
+        00ab1158 01              uleb128    1h                                               (LSDA Call Site) Action Table Of
+                             **************************************************************
+                             * (LSDA) Action Table                                        *
+                             **************************************************************
+        00ab1159 7f              sleb128    -1h                                              (LSDA Action Table) Type Filter
+        00ab115a 00              sleb128    0h                                               (LSDA Action Table) Next-Action 
+
