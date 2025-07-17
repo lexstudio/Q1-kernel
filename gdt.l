@@ -16,6 +16,11 @@ entry:
     lsl u32 @r1 @r6
     cmp (@r7/0_1) <M>
     mov && *main @r5 (@r5+0_1) ^*block (u16/3) ^u32 // rule declaration start 
+// cache error
+
+    lsl @r4 ^*main (@r5/0_3) <> @r1
+
+
 
     dw *main (@r8 @r3) ^u16
 

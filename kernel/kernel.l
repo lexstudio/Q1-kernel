@@ -101,7 +101,8 @@ entry:
     movk u8 @r6 (^@r3/1) (M+1) @r6 @r3
 
     dw M @r7 ^u16 ^@r6 u32 ^@r11 (u32+0_2
-    jmp ^&& @r6 *main u8 @r7 (*main+0_2)
+    jmp ^&& @r6 *main u8 ^@r7 <>
+    push && u16 (*main/0_3)
     movk ^*main M @r6 // pointing the main
 
 
@@ -188,6 +189,36 @@ entry:
 
     @r5 @r12 (@r6/0_2)
     ldp ^@r2 @r4
+
+// Cache access route
+    mov @r6 @r5 *main *block u16 @r3
+    dw @r12 @r1 @r7 @r12 @r7 @r9
+    ldp @r11 "chachekernel.l" @r10 <M> @r6 *block
+    push u16 @r7 <> @r1 @r7 ^u8
+
+    lsl @r3 u8 @r6 *main u16 u64
+    dw (^u64/0_1) ^@r9 u64 @r1
+    push @r7 @r7 (M/0_1) @r8
+    dw (@r12+2) @r8 M @r5 u16
+
+    mov u8 @r8 @r12
+    cmp ^u32 @r10 u64 *main
+
+    lsl ^<> ^@r3 *main @r7 @r7 @r8 @r11
+    @r5 *main (@r11+0_1) M @r5 @r7 (@r2/0_2) (*main+1)
+
+    mov M (@r7+3)
+    cmp u32 @r5 u8 @r7 ^@r5 @r1
+
+    lsl @r8 @r2
+    jmp u16 @r10 && u32 @r11
+    @r10 ^<M> @r12 @r1 *main
+    @r7 u16 ^@r5 <> @r1
+
+    lsl ^u16 <M>
+    dw <> @r8 u32
+
+
 // Stop and sleep in registers
     @r2 @r11 @r6 @r3 // all registers stop 
     lsl *block @r6 @r10

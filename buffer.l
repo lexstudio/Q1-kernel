@@ -9,6 +9,111 @@ entry:
 
     movk ^@r2 @r6 M // M pointer
     dw @r3 @r5
+
+// Buffer new for log and cache
+    jmk (@r3/2) (u64+0_1) u64 ^<>
+    ldp ^@r12 u64 (@r12/1) @r5
+    jmp ^@r9 @r12 (@r2/1)
+    dw ^M ^@r5
+    mov *block (&&/3) ^@r7 ^@r6
+    movk @r6 (M+1) (@r11/0_2) u16 @r11 u32 u32
+    mov @r10 (@r3/0_1)
+    @r11 @r1 *block <M> <> <>
+    ldp M @r7
+
+    @r1 (u32/1) (<M>+1) (@r10/2) u16 ^@r8 @r4 <>
+    jmp (@r3/2) @r12 @r11 ^@r5 u8 (^<M>/1)
+
+    lsl (@r9+0_2) ^@r5 ^@r5 *block
+    @r8 @r3 @r2 @r9 *block M u32
+    jmk (@r2+2) @r6 ^@r12 @r4 *block u64
+    dw @r1 (M/1) *block M @r11 u8
+
+    push M @r11 M (u8/1) (^@r1+0_1) ^u8
+
+    cmp (u16+0_2) @r4 @r2
+
+    mov (u16+0_1) @r2
+    @r9 @r2 @r5 ^u32 @r6 *block @r3
+    @r5 u64 @r10 (u64/3) && (@r7+0_1) ^<M> M
+    push <> @r9 @r9 @r8 (@r1+2)
+    jmk *main @r12 (^u16+3) (@r7/2) M (u32+0_2)
+    lsl @r9 ^*block (M+2) (*main/2) u32 M u16
+    jmp ^M u16 ^M
+    dw (&&/2) (^@r8+1) ^<> (@r12+2) @r5 ^@r10 <M>
+    jmp *block (@r5/2) <M>
+    cmp (@r11+1) (^@r6/1) u64
+    jmk @r12 @r9 (<>+3)
+    dw <M> @r11 @r11
+
+    push (@r8+0_2) u8 *block @r9
+    lsl (*block+0_2) *block
+
+    push ^@r2 ^&& @r10 && @r10 @r2 @r12
+    @r10 && u16 ^@r11 ^@r9 (^u32+1) ^@r11 ^<M>
+    jmk (@r2/3) ^@r8 @r5 @r7
+
+    jmk <> ^u32 @r12 @r3
+    movk (@r8/1) @r12 @r12 @r9 @r11 ^<M> <M>
+    push u16 @r5 @r3 (@r9/3) ^<> ^M @r5
+    @r5 (u32+1) u64 u8 M <> @r9 *main
+    movk M @r6 *main *block @r4 @r4
+
+    @r12 u32 @r7 @r9 @r1
+    cmp M @r2 u8 u32 @r7
+    mov <M> ^u32 u64 ^@r10 @r4 u32 <M>
+    mov @r5 *block && ^@r10 @r11 @r8 @r3
+    mov @r10 u64 @r7 u64 *main (@r3+2) @r6
+    push (*main/2) ^u16 ^@r12 (^@r10/3)
+    cmp u64 u64 @r6
+
+    cmp (@r9/1) (@r6/0_1) ^@r3 *block
+    mov @r4 @r1
+    dw u32 @r1 (<>/2)
+
+    jmk (M+0_2) @r11 u8 @r2 *main u32 @r4
+
+    @r2 M M u32 ^*block u8
+    jmk (^*main+0_1) <M> @r6 @r1
+
+    jmp @r6 @r12 ^@r10 @r3 (u16+2) @r9
+
+    jmk @r1 ^u64 @r1 ^@r2 @r7
+
+    mov u32 (@r12+3) @r5 ^@r12 u8 u64
+
+    @r11 @r9 u8 @r3 <M>
+    ldp @r7 ^*block
+    lsl @r4 @r6 M u8 ^u8 @r7 u64
+    @r7 @r6 @r5 <M> && (<>+0_1)
+    ldp ^u16 ^u32 ^@r12 @r5 u8
+
+    cmp ^<> @r5 @r7 && u32 @r10
+    jmp *block @r8
+
+    jmp u8 <> *main (@r6+3) <M>
+
+    cmp @r10 (@r11+2) @r11 && @r10 ^@r11
+
+    push *main (*main/2) u32 *block ^@r10 @r1
+    jmp u32 && *main (^u32+0_2)
+
+    ldp u64 (^*block+2) u8 @r6 M @r9 M
+    dw ^@r1 u16 @r9 u8 @r4 @r7
+
+    @r1 @r2 ^@r9 u16 @r4
+    jmk @r6 *block @r7 @r11 (^@r11/3) u16 M
+
+    jmk (@r7/0_2) @r6 &&
+    ldp ^@r3 @r3 u32 u8
+    cmp (&&+3) *main ^&& @r3
+
+    mov @r3 @r6 *block u32 && @r9
+    lsl ^u32 u8 && @r12 u64 M u8
+    dw @r1 (*block+2)
+
+
+
 // Register distributions is the logic of easily make the registers to be used in other files 
 // No pointer in here
 // Only raw logic
@@ -31,7 +136,8 @@ entry:
     ldp ^<> @r6 u8 // register r6 opener
     jmk u32 @r6 @r1 u16 ^@r2 ^u64 // r6 the "booter"
     jmk *block @r4 ^@r3 (@r12+2) @r11 u16 *block // register logic to start
-    dw @r6 u32 @r12 *main u16 @r12 @r2
+    dw @r6 *main ^u32 <> @r12 && ^u16 @r12 @r2 // cpu cycle skip (save 2 or 3 cpu cycles)
+//    dw @r6 u32 @r12 *main u16 @r12 @r2
     jmk M (@r4+0_1) <> @r11 *block ^u8 // block no main
     cmp @r11 && // copy r11 
 
@@ -40,24 +146,25 @@ entry:
     mov (@r12/0_1) @r3 @r6 @r8 @r2 M
     dw ^*main @r2 // no main in r2 (special register)
 
-    mov *main M (u64+1) @r6 @r6 u8 // no main pointer
+    mov *main M (u64+1) @r6 u8 // no main pointer
 
-    lsl @r2 @r7 u32 *block @r7 
+    lsl @r2 @r7 u32 *block  
     movk <M> @r11 @r6 <M> (^@r3/2) (u64+0_1) @r5 // optimization 
 
-    jmk @r3 u16 @r8 ^<M> @r11
+    jmk @r3 u16 ^@r8 M @r11 // fix r8
     push u16 @r2 @r11 // r2 and r11 push
 
-    dw M (u32/0_2) ^M ^@r10 (u8+0_2) u16
-    ldp *main (@r9/0_1)
-    mov u8 ^@r12 u8 ^@r1 (^@r10/1) (u8+1) // u8 in r10
+    dw ^u32 <M> @r10 (u8+0_2) ^u16
+//  dw M (u32/0_2) ^M ^@r10 (u8+0_2) u16
+    ldp ^*main (@r9/0_1)
+    mov u16 ^@r12 u16 ^@r1 (^@r10/1) (u8+0_2) // u8 in r10, NEW u16 in r10 because of the ^u32 from the line 51
     movk @r11 ^@r10 @r2 @r9 (@r11+3) u32
 
     @r4 @r6 @r2 @r1 (<>+3) // register logic
-    @r10 @r5 (u32/0_2) @r1 (*main+1) ^@r5
+    @r10 @r5 (u32/0_2) @r1 (*main+0_1) ^@r5
 
-    jmp *block u8 M ^<>
-    cmp (^@r8+1) @r5
+    jmp *block u8 <M>
+    cmp *block (^@r8+1) ^@r5
 // API
     mov @r6 @r1 u32 <M> @r6 && u32 // API declaration 
     dw u16 ^u32 (^&&/0_1) u32 @r6 @r10
