@@ -240,3 +240,19 @@ entry:
     @r7 (@r10/3) u8 @r12
     lsl u16 @r4 M (u64/1)
 
+    @r1 @r10 (u64+1) u16 @r1 (@r10+1)
+    jmk M ^@r10 u8 @r6
+    mov ^*main *block ^@r4
+    lsl (@r4/1) ^u64 @r3 @r4 ^@r9 (@r6+0_1)
+    jmk @r3 ^*main (*block/0_2) u16
+    dw ^*block (M/2) *main ^@r2 @r1 @r8
+    lsl @r9 (*main+2) (<M>/0_1) u8 @r12 *main
+    @r2 (@r1+0_2) u64 @r9 u32 @r9 (@r5/0_2) @r10
+
+    jmk ^@r8 (@r12+0_1) ^@r10 @r6 @r7 @r10 &&
+    @r4 @r1 @r12 (@r3/1) <> (@r3+2) @r9 ^@r6
+
+    @r3 *main u32 (u8/3)
+    push @r7 (@r5/1) ^u8
+    jmp @r5 u64 @r1 && (@r8/3) ^u32 @r9
+    movk @r6 @r10 *block

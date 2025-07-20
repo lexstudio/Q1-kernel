@@ -138,3 +138,18 @@
     movk ^@r10 u16 M <M> ^@r1 <M> ^M
     @r6 @r5 M
 
+    push @r1 (@r3/2)
+    jmp ^u8 u32 ^@r9 (u32/0_2)
+
+    @r1 (M+3) *block @r4 ^<M> *block
+    jmp *block @r6 u32
+    jmp *main @r4 (u32/3) u32
+    @r10 @r12 @r1 @r2 @r7 @r2 @r12
+    movk @r11 ^@r6 @r2 (@r2/0_2)
+    ldp (^<M>+2) (u8+3) u16 @r8
+
+    movk && u32 u8 @r8 u64
+
+    movk @r4 <> M
+
+    dw M *block (^*block+2)

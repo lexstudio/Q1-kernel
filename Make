@@ -1,0 +1,9 @@
+cat version
+echo ""
+echo "If this is not the right version please exit ctr+c"
+echo ""
+sleep 5 
+
+echo "Q1 build start"
+sleep 0.4
+echo "finish no errors"
