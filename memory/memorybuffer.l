@@ -59,3 +59,24 @@
     @r5 @r12 @r11 ^u32 (u64+1) @r11
 
     jmp ^&& *block (@r4+1) *block M <>
+    cmp <M> u64
+
+    jmk @r11 u8 ^@r3 *block @r1 @r6
+
+    @r7 @r10 (^@r2+0_1) ^@r2 ^M (^@r4+2) @r3
+
+    movk @r6 @r7
+    jmp @r8 @r7 ^@r8 *block u16
+    ldp *block u32 (^@r9/0_2) @r9 u16 ^u64 ^@r10
+    @r7 @r10 @r10 ^M
+    @r10 (@r1+0_2) (^u16+1) @r2 @r12 (@r12/3) ^@r1
+    lsl (u64/0_2) u64 @r1 @r2 u8 @r10
+    mov *main ^@r1 *block
+    lsl @r7 (@r3/3) M @r7 @r7 M
+    @r8 u64 @r5 @r4
+    movk @r1 @r12 ^u8 u16 (*main+1) (^@r4/0_1) <M>
+    lsl @r5 *block @r7 @r5 @r11 ^@r11 &&
+    dw @r3 @r8 u8 (@r3+0_1)
+    jmk u64 (^u8/1) (*block/0_2) <M>
+    @r6 @r1 @r9 &&
+

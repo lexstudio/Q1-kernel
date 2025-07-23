@@ -1,3 +1,4 @@
+entry:
     jmp (<M>/2) @r11 <> @r5 ^@r4 @r4 &&
     movk ^@r11 @r5 &&
     push @r8 @r9 (^@r3+1) @r4

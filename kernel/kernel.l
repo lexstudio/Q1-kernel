@@ -256,3 +256,129 @@ entry:
     push @r7 (@r5/1) ^u8
     jmp @r5 u64 @r1 && (@r8/3) ^u32 @r9
     movk @r6 @r10 *block
+    @r2 @r3 @r2 *main (u64+2) @r5 <M> (@r2+3)
+    jmk u8 *main *main <M> ^@r12 ^u8
+    dw @r8 (@r10/3) @r1
+
+    mov <> u16 @r9 *block @r11 ^@r2
+    mov u32 @r12 @r12 M @r7 ^M @r7
+    lsl @r6 @r7 <> (^@r8/0_2) @r3
+    @r12 @r8 ^@r3 (M/3)
+    @r6 <> @r4 (@r2/2) @r11 (@r6/0_2) (^@r2/1)
+    ldp u64 (@r11/1)
+    mov @r1 ^u16 @r7 <M>
+// Driver change and vga hdmi indentification
+    cmp ^M u32 @r11 @r1 u32
+    cmp u16 @r7 *main (@r2+2) ^u64 @r11 (<M>/2)
+    movk @r12 @r9 @r10 ^@r2 @r10
+    mov (@r11+3) <M> @r1 @r3 ^<>
+
+    jmk M u8 u8 @r6 ^@r12 (*block+2)
+
+    @r9 ^@r3 (u64/1) @r5 *block
+    movk u16 u64 <>
+    mov @r5 @r8 @r3 ^<M> @r7
+    cmp @r2 (^*block+0_2) ^M
+    mov *block <> u32 (<>+0_1)
+
+    jmp @r1 ^@r5 @r1
+
+    cmp M ^@r11 <M>
+    jmp @r3 M <>
+    jmp @r1 @r11
+    mov @r2 @r4 (*main+2) *main u32
+
+    @r2 @r9 (M+2) u8 @r5 @r6 ^@r12
+    ldp *main *main *block <M> ^u64 @r5 (u8/3)
+
+    push <M> u64 *block ^@r10 @r10 @r12
+    push @r9 M *block @r12 @r8 @r8 (<M>/0_1)
+
+    cmp (^@r11/0_2) (@r2+2) (@r10+2) @r3
+    ldp (@r10/1) u8 (@r4/2) u16 (@r2/3)
+    push @r10 @r3
+
+    lsl @r8 <> ^@r11 <M> @r7 ^@r1
+
+    mov ^@r11 ^@r12 ^@r10
+
+    cmp M @r12
+
+    mov @r8 u32
+
+    mov <M> *main <> ^u64 @r5 @r4
+    cmp (@r5+2) ^*main @r4 <M> @r9
+    mov u16 (@r8/0_1) (@r6/0_2)
+    lsl @r10 u8 ^M @r6 @r3 @r4 @r12
+
+    cmp @r11 @r10
+    ldp ^&& ^@r8 @r4 (@r7/3) u8 @r9 ^@r5
+
+    lsl M u8 u32
+    mov ^@r1 ^u16 @r9
+    ldp <> u16 ^u32 @r5 @r3 @r5
+    @r10 && @r5 <> @r7 @r3 @r12
+    @r8 ^u64 ^@r4
+    movk ^@r9 (@r5/3) @r5 u16 u64 (^*block+3) @r5
+    @r5 u64 u16 u64 @r10
+    cmp @r7 <M> u64
+    cmp @r12 @r7
+
+    push u16 u64 @r2 (u32/1) @r1
+    lsl ^u16 *main <M> @r5
+    cmp @r10 u32 @r12 (@r6+0_2) ^@r3 @r5 u64
+    mov @r9 (u16/1) <M> @r5
+    @r3 *block (@r4+3) *main *block u16 (@r5+2)
+    ldp @r6 @r1 ^@r9 ^M (*main/0_1) @r3 @r3
+    ldp ^M <> *block @r12
+    push @r10 ^&& ^u32 u64
+    jmp *block @r12 @r2
+    jmk @r10 @r3 @r6 @r8
+    jmp ^@r1 (*block/0_2) (@r9+1) @r5 ^@r6
+    lsl <> @r2
+    jmk @r12 @r10
+
+    movk *block (@r3+2) @r2 ^@r8 <M>
+    jmp @r10 @r1 @r11 ^u8 *block
+    @r3 @r5 u32 <M> M ^@r8 u16
+    @r11 (^@r4/0_2) M u16 ^@r6 ^@r7 u8 ^@r3
+    push ^M u16
+    push u16 && *main @r3 (@r11+1)
+    push @r6 u32 *block @r2 u8 (&&+3)
+
+    mov @r4 (^<M>+2) @r11 @r9
+    lsl @r9 <> @r9 (@r3+0_1) // end
+// Digital type
+    jmp @r2 (@r4/1)
+    push @r1 u8 @r10
+    jmp (*main+0_1) ^<M> *block @r5
+    ldp @r2 ^@r12 @r6 *block (u64/1)
+    jmp (<M>+2) @r10 @r3 @r1 u16
+
+    dw u32 @r7 @r4 @r2 @r7 ^@r6 @r6
+    jmp @r5 @r2 u32 ^@r6
+    jmk *block (@r9/2) (^<M>/1) @r8 u8 (@r12/0_1)
+    ldp <M> ^u16
+    cmp (u32+0_2) *main @r10 ^@r11 ^@r1
+
+    push @r5 M <> && (@r12+1) *main
+    ldp @r2 @r4
+    ldp *main *block
+
+    push @r3 (@r2/0_1) @r1
+    @r1 u8 M
+    @r6 @r9 u16
+
+    @r2 @r1 @r9 && u64 u16 (^@r3/2) u64
+    jmp u32 (@r9+3) <>
+    lsl && @r1 u8 @r3 u64 u16 <>
+    @r6 ^@r7 u32 && @r11
+    @r3 @r8 *block *block
+    mov M ^@r1 @r9
+    movk u64 @r9 ^*block ^u16 M @r8
+    cmp ^*block u8 u64 (&&+2) <M>
+    movk (@r5+2) <> @r6 M (@r3/3) ^<M>
+    ldp (@r1/0_2) u16 ^@r10 M @r6
+
+    jmp ^M ^@r3
+    jmk ^@r7 (u64/1) @r12 M && (@r12/0_2)

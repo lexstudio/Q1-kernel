@@ -117,3 +117,16 @@ entry:
 
     jmk @r8 u16 <> ^@r4
     jmk @r4 ^@r5 @r1 ^@r3 @r7 u32
+    @r3 @r2 @r12
+    push (@r10/1) &&
+    jmp @r11 ^@r11 @r6 ^<>
+    push @r1 (u8+0_1) (<M>+0_2) @r9 @r5
+
+    @r6 (M+3) *main
+
+    dw @r2 (<M>+3) <M> @r4 @r7 <M>
+    movk @r3 (@r3/3) @r9 @r11 (^<>/3) M
+    dw @r4 @r7 ^@r4 @r10
+    dw *block @r2 ^M (@r10/3) u8 @r6
+
+    push @r5 @r4

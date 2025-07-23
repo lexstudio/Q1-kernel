@@ -179,3 +179,32 @@
     lsl @r6 M ^@r6
     @r11 <M> (M+0_2) M ^&& *main u8 (^<M>/1)
     dw @r1 @r4 @r8 @r7 u64
+    mov ^@r10 @r12 u16
+
+    dw *main (u16/0_2) ^&& (u32/0_2)
+    lsl ^*block @r1 *block u16 *block @r12
+    cmp *block @r12 @r4 @r10 @r11 <> @r8
+    lsl (*main/3) @r1 @r12 u8 @r1 @r2 @r8
+    jmp @r12 <M> *main u8 @r6
+
+    lsl *main <> &&
+    cmp @r2 @r4 ^<> && @r11 M @r7
+    jmp u32 @r4 ^@r11 u8 @r12 M <>
+    jmp u16 ^@r5 (@r4+0_2) u8 @r2 @r12
+
+    jmp ^@r4 @r7 u64 @r11 (^<>/2) ^@r4 *main
+
+    mov @r11 @r5 @r3 (u16+1) @r12
+    push @r12 @r8 M @r6
+
+    lsl @r12 M
+
+    mov u32 @r7 @r3 *main
+    dw ^@r10 @r4
+    dw @r12 (^@r3/1)
+
+    jmp @r8 @r9 M (u8/2) @r7
+    jmk M u16 ^@r6 @r12 ^@r11
+    jmk @r10 ^*main ^M @r11
+    jmk @r11 *block && (^&&/2) @r3 (@r5/1)
+
