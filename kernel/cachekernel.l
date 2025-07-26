@@ -130,3 +130,14 @@ entry:
     dw *block @r2 ^M (@r10/3) u8 @r6
 
     push @r5 @r4
+    mov u64 @r3 M (*block+1) @r7 ^<> M
+    jmk <M> (^*main/0_2) @r8 u64 u8 (^u64+0_2) u8
+    mov && u64 (@r10+0_2) u16 (@r12/0_2) (^&&+1) @r2
+    @r9 @r8 @r4 @r1 @r1 @r5
+    @r3 @r1 @r9 @r5 @r9
+    jmp && && @r8 @r12 @r6 @r2 @r6
+    push (@r3+1) M @r2 u32 <> u32 ^@r8
+    cmp @r11 @r4 (@r1/1) (*main+0_2)
+    @r11 (^@r10+0_2) <M> <> @r2 (@r8/0_2)
+
+    @r3 u32 u8 u32

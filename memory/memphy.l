@@ -1,3 +1,4 @@
+entry:
     @r11 (@r9/3) @r5 @r6
     jmp u16 u16 (@r12+3) *block *block @r2 (@r5/1)
     jmp ^*main && @r3 (*main/2)
