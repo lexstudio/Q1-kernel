@@ -523,3 +523,170 @@
     dw ^@r10 u16 *block u8 (u64+1)
     @r3 ^<> @r2 ^@r1 @r6 u64 && @r10
     ldp u8 ^@r8 @r11 @r10
+    ldp (@r5+3) u16 ^@r10 @r8 @r7
+
+    mov u8 <M> (@r12/0_1) &&
+
+    mov u64 u32
+    lsl ^u64 (@r7/2) ^@r10 (@r1/1) @r11 u64 ^@r2
+    ldp @r1 (u64+1) M @r7 @r4 <> @r12
+    mov (^<>+3) ^M (^@r10+3) @r5
+    movk @r4 (@r5+0_2) <> @r10 u32
+
+    ldp @r10 <> @r9
+    jmk @r12 ^@r10 @r1 ^@r7 @r5 @r9 u32
+    jmp @r2 u64 @r8 <>
+    jmk ^@r11 (@r4/3) @r10 ^<> (u32/2) ^@r1
+    jmk ^u8 u16 u64 ^*main @r3 <> (*block+0_2)
+    ldp @r10 (@r4+3) @r3 (^*main+2) *block
+    @r2 @r1 u8 u64 @r4
+    ldp (@r1/0_1) @r4 *main u16
+
+    push @r12 ^<M>
+
+    lsl ^<> @r11 *block ^u64
+
+    jmp *main @r10 @r8 ^&& @r4 ^@r8 @r7
+    jmk @r6 ^@r11 M ^@r4 @r2
+
+    push u8 @r2 (@r1/0_1) ^@r5
+
+    @r8 ^u16 u16 (^u32/0_1)
+    @r4 *main (@r1/3) && && @r6 @r10
+    @r3 (^u16/0_1) u16
+    lsl (@r2+0_2) ^*main
+    ldp @r7 @r8 (u8+0_1) <M> (*main+0_1) @r10 ^@r12
+
+    jmk ^<> @r9 <> @r5
+    jmk ^@r9 ^@r10 @r12 ^@r3
+
+    mov ^M (u16/1) @r11 <M> @r3 @r6
+
+    cmp @r7 @r11 (@r9+0_2) <M> u8 @r5
+
+    dw ^@r1 ^@r9 @r3 @r5 u64
+    push @r5 <> <M> @r7 @r8 (^@r12/1)
+
+    cmp @r4 @r11 ^M
+
+    lsl @r1 u8 @r9 u8
+
+    ldp && <M> @r12 @r5 u64 @r2 (@r5/3)
+    push @r9 u64 @r6 ^*block @r8 <M> @r11
+    movk @r12 (@r5+0_1) *main ^@r1 @r9
+    dw u64 @r3 *main <M>
+    @r10 @r3 @r9 (^M+3) *block @r3
+    push @r8 @r3 @r10 (@r6/2)
+    jmp (*block/3) M
+    dw @r11 (@r7+0_2)
+
+    @r5 ^u8 @r3
+    cmp (*block/2) @r4 (&&/1)
+    @r8 @r5 @r10 *block (<M>/2) @r7 ^@r11
+
+    mov @r11 @r11 ^@r7 <M> @r11
+    movk (<>+0_1) @r11 M ^@r1
+    push @r7 @r1 @r11 u16 @r6 u64 u32
+
+    @r11 u16 u8
+    dw (*block/2) (u32/0_2)
+    dw *block @r8 @r6 (@r11/1) <> *main
+    lsl @r11 && @r10 u8 @r3 @r3 @r3
+    @r6 u8 <M>
+    movk ^u16 ^u8 (^@r1+3) @r12 @r11
+
+    @r9 @r3 && u16 ^u8 ^@r6 ^@r11
+
+    cmp @r5 (M/2) (@r12/0_2)
+
+    push (@r3/0_2) <> @r12 @r10 M u32
+    @r7 (@r2+2) @r9 @r1
+
+    mov @r5 *block u8 @r7 && *block @r9
+    cmp <M> ^*main @r4 ^@r10
+
+    @r1 <> u16 @r6 @r12 && M
+
+    movk (<M>+1) u8 @r6
+    @r9 ^u16 @r12 @r5 ^@r3
+
+    @r7 *block @r7 (*main+3) ^@r9
+    movk ^@r12 (@r3+1) *main u64
+    jmp (*block/3) (u8+1) && @r9 &&
+    cmp @r2 ^u8
+    @r1 @r6 ^@r3 <M>
+    push @r4 (<M>/0_1) @r3 M (<M>/1) (^@r6/0_1)
+
+    @r5 u8 <M> M ^u64
+    push *block <> ^&& ^@r1
+    movk (*main/0_1) (^@r12+0_1) <M> @r11 (@r2+2) @r2
+    jmp u32 u8 @r10 @r3 u16 (^@r2+0_2) @r1
+
+    mov @r2 && (@r10+3) *main ^@r7
+
+    mov @r6 @r10 (<M>/3) @r1
+
+    @r5 u32 @r2
+    mov (u32/2) M @r7
+    movk @r11 (@r9/0_2) u8 <> ^@r9 @r3
+
+    cmp @r11 @r3 @r9 @r7 @r12 @r1 (<>+0_2)
+
+    dw @r10 *main ^@r4 <> u64
+
+    lsl M @r2 @r4
+    dw @r2 @r5 (@r1+3) @r11 @r11 @r2 @r10
+
+    @r5 u8 @r9 (@r6+2) @r4 ^@r10 u64
+
+    @r12 @r12 *main u8 @r12 @r11 ^@r10
+    push u32 @r7 @r4 @r1 *block ^@r10 &&
+    lsl @r6 @r5 @r6 && ^u16 *main M
+
+    @r11 @r12 @r6
+    movk @r5 @r11
+    jmp @r10 @r12 *block ^*block *block
+    @r4 @r12 *block @r5 *block
+
+    lsl (u64/3) @r1 @r3 <M>
+    @r10 *main (^@r1/3) @r12 @r9 ^u8 @r1 ^@r9
+    @r2 u64 ^@r3 @r8 @r9 (@r7/2) *block
+
+    movk ^<> ^@r7 @r11 *block @r6
+    push u32 ^@r5 (@r5/0_1) @r4
+
+    cmp @r12 (^@r7/3) (@r3+1) ^@r3 @r8 u32
+    @r12 @r9 @r7 ^u32 @r2 && ^*main
+    lsl M @r12
+
+    movk @r12 ^@r1 u8 @r1 (u8/0_2) && u64
+    jmk (@r5+2) @r12 u16
+    jmp @r7 u16 ^@r10 @r1 @r11
+    push M @r9 ^@r2
+
+    @r3 @r9 (u32/2) @r12
+    ldp u32 @r10 @r2
+
+    jmp <M> @r9 <>
+    ldp @r8 ^*main ^&& <> @r5 M u64
+
+    lsl @r11 <M> ^@r4 ^@r5 @r7
+    lsl u64 (@r6/1) @r6 && (^@r4+0_2) ^<> ^u16
+    cmp @r11 ^<> (u32/2)
+    cmp *block <>
+
+    push (*main+1) ^@r12 (@r11+0_2)
+
+    jmk @r12 (@r8+1) (M+0_1)
+    @r1 ^@r1 @r4 (@r10/3) ^u16 M
+
+    ldp M @r2 <> <M>
+    lsl *block @r8 @r6 @r12 u8
+    lsl <M> u32 u64 ^@r5 @r10
+    lsl ^@r7 @r12 ^@r10 (^@r6+0_2) @r2 @r9 *block
+    jmp (M/1) (*main+3)
+    jmp (u8+2) @r3 *block (@r2/2) *main @r5
+    dw ^@r2 @r2 u32 ^@r4 @r3 @r9 ^u64
+
+    jmk ^@r2 *block @r4
+

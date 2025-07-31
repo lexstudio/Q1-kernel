@@ -5,5 +5,5 @@ echo ""
 sleep 5 
 
 echo "Q1 build start"
-sleep 0.4
+sleep 0.8
 echo "finish no errors"
