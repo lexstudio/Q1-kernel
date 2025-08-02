@@ -122,6 +122,8 @@ entry:
 
     mov *main <> @r1 *main // main cache
     @r11 @r4 u64
+    
+    @r2 @r10 <> *main (u32/0_1)
 
     jmp @r2 ^u64 // cache register for u64
     @r6 ^@r3 <> u8

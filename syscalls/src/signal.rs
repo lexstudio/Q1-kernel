@@ -94,7 +94,37 @@ pub extern "C" fn relibc_panic(pi: &::core::panic::PanicInfo) -> ! {
 pub fn rust_begin_unwind(pi: &::core::panic::PanicInfo) -> ! {
     relibc_panic(pi)
 }
+    
+fn wait(
+        &self,
+        uaddr: VirtAddr,
+        expected: u32,
+        _timeout: &TimeSpec,
+    ) -> Result<(), SyscallError> {
+        Self::validate_futex_ptr(uaddr)?;
 
+        let key = Self::addr_as_futex_key(uaddr).ok_or(SyscallError::EINVAL)?;
+        let value = uaddr.read_mut::<AtomicU32>()?;
+
+        if value.load(Ordering::SeqCst) == expected {
+            let futex = self.get_alloc(key);
+
+            let scheduler = scheduler::get_scheduler();
+            let current_task = scheduler.current_task();
+
+            futex.insert(current_task.clone());
+            scheduler.await_io()?;
+            futex.remove(&current_task);
+
+            if futex.is_empty() {
+                self.futexes.lock().remove(&key);
+            }
+
+            Ok(())
+        } else {
+            Err(SyscallError::EAGAIN)
+        }
+}
 #[cfg(not(test))]
 #[lang = "eh_personality"]
 #[no_mangle]

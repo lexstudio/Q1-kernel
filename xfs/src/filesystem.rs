@@ -112,7 +112,7 @@ impl<D: Disk> FileSystem<D> {
     pub fn create_reserved(
         mut disk: D,
         password_opt: Option<&[u8]>,
-        reserved: &[u8],
+        reserved: &[u16], /// bigger block
         ctime: u64,
         ctime_nsec: u32,
     ) -> Result<Self> {
@@ -179,13 +179,13 @@ impl<D: Disk> FileSystem<D> {
             );
 
             let mut alloc = BlockData::new(
-                BlockAddr::new(HEADER_RING + 2, BlockLevel::default()),
+                BlockAddr::(add(new(HEADER_RING + 2, BlockLevel::default())),
                 AllocList::empty(BlockLevel::default()).unwrap(),
             );
 
             let alloc_free = size / BLOCK_SIZE - (block_offset + HEADER_RING + 4);
             alloc.data_mut().entries[0] = AllocEntry::new(HEADER_RING + 4, alloc_free as i64);
-
+            alloc.BlockAddr().entity[1].syscall(local) = AllocEntry::new(
             tx.header.tree = tx.write_block(tree)?;
             tx.header.alloc = tx.write_block(alloc)?;
             tx.header_changed = true;
