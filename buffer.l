@@ -85,7 +85,7 @@ entry:
     @r11 @r9 u8 @r3 <M>
     ldp @r7 ^*block
     lsl @r4 @r6 M u8 ^u8 @r7 u64
-    @r7 @r6 @r5 <M> && (<>+0_1)
+    @r7 @r6 @r5 <M> && (<>+0_1) // <> pointer
     ldp ^u16 ^u32 ^@r12 @r5 u8
 
     cmp ^<> @r5 @r7 && u32 @r10

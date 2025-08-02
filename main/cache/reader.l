@@ -34,7 +34,7 @@ entry:
     push @r1 &&
     @r5 @r5 @r1 @r6 u64
     mov @r1 @r10 ^u32 @r6 ^<> ^*main
-    mov (@r8/1) @r11 @r11 (<>/0_2)
+    mov (@r8/1) @r11 @r11 (<>/0_2) // setup for the main pointer 
     @r9 (@r1+1) *main ^u32 u64 u8
 
     @r1 u8 @r1 M ^<M>

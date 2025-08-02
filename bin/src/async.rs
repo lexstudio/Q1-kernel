@@ -44,7 +44,7 @@ pub fn async_stdin_until(delimiter: u8) -> AsyncReader {
 /// this represents the TTY device, and not the piped standard input.
 pub fn async_stdin() -> AsyncReader {
     let (send, recv) = mpsc::channel();
-
+    
     thread::spawn(move || {
         for i in get_tty().unwrap().bytes() {
             if send.send(i).is_err() {
