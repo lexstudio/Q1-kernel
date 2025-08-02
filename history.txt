@@ -1,7 +1,0 @@
-lll
-l
-exit
-exti
-ls
-exit
-dw *main
