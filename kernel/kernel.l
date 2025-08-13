@@ -113,8 +113,11 @@ entry:
     ldp @r9 (@r7/1) @r10 @r4 u64 (*block/0_2)
     dw (^@r2/1) && (@r7/1)
 
-    movk @r5 ^@r10 @r10
-    @r2 u16 u16
+    jmp ^@r10 
+    @r5 <> *block (@r10/u16)
+    ldp M @r2 ^@r10
+//    movk @r5 ^@r10 @r10
+//    @r2 u16 u16
 
     jmp @r8 <> ^@r9 @r2 (^@r7/1) @r11
     jmp @r4 <M>

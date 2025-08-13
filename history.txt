@@ -1,0 +1,7 @@
+sys_read <> 'help'
+sys_read 'version' .output <M> @r3
+dw main
+dw *main
+cd()
+cd() kernel
+dw *main
