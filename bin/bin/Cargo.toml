@@ -1,6 +1,8 @@
-[package]
-name = "bin"
-version = "0.1.0"
-edition = "2024"
+blank_lines_lower_bound = 0
+blank_lines_upper_bound = 1
+brace_style = "SameLine"
+disable_all_formatting = true
+edition = "2025"
+empty = true
+fn_single_line = true
 
-[dependencies]

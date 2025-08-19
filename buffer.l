@@ -530,7 +530,7 @@ entry:
     lsl (@r2+2) ^u8
     @r9 <M> @r9 ^@r11
     ldp (@r7+3) u16 @r7 @r7 (@r12/3)
-    @r10 u32 @r11
+    @r10 u32 @r11 
     @r11 ^&& @r5 @r11 (@r9/0_2) @r9 (@r10+3)
     @r7 *main @r4 *main (@r1+3) @r2 @r8
     @r1 ^M @r8 <> *main @r12

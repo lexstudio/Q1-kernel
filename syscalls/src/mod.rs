@@ -2,7 +2,7 @@
 use core::fmt::Display;
 use core::mem::MaybeUninit;
 
-use aero_syscall::prelude::*;
+use syscall::prelude::*;
 
 mod fs;
 mod futex;
@@ -246,8 +246,8 @@ pub fn generic_do_syscall(
         SYS_FUTEX_WAIT => futex::wait(b, c, d),
         SYS_FUTEX_WAKE => futex::wake(b),
 
-        // Syscall aliases (this should be handled in aero_syscall)
-        SYS_MKDIR => fs::mkdirat(aero_syscall::AT_FDCWD as _, b, c),
+        // Syscall aliases (this should be handled in _syscall)
+        SYS_MKDIR => fs::mkdirat(_syscall::AT_FDCWD as _, b, c),
 
         SYS_DEBUG => tag_memory(b, c, d, e),
 
@@ -257,7 +257,7 @@ pub fn generic_do_syscall(
         }
     };
 
-    aero_syscall::syscall_result_as_usize(result)
+    _syscall::syscall_result_as_usize(result)
 }
 
 #[syscall]

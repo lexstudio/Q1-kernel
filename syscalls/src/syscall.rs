@@ -4,7 +4,6 @@
 //! largely provided by automatically generated bindings to the functions and
 //! data structures in the [`header`] module.
 //!
-//! Currently, Linux and Redox syscall backends are supported.
 
 #![no_std]
 #![allow(warnings)]
@@ -48,12 +47,7 @@ extern crate memchr;
 extern crate posix_regex;
 extern crate rand;
 
-#[cfg(target_os = "linux")]
-#[macro_use]
-extern crate sc;
 
-#[cfg(target_os = "redox")]
-extern crate syscall;
 
 #[macro_use]
 mod macros;
@@ -135,7 +129,7 @@ use crate::userland::task::TaskId;
 
 use crate::utils::sync::{Mutex, WaitQueue, WaitQueueFlags};
 
-use aero_syscall::SyscallError;
+use _syscall::SyscallError;
 use alloc::collections::VecDeque;
 use alloc::vec::Vec;
 use spin::Once;

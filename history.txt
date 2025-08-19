@@ -5,3 +5,13 @@ dw *main
 cd()
 cd() kernel
 dw *main
+ls
+dw *main
+ls
+l
+lslslsls
+lsl
+ls
+sl
+lsssl
+dw *main

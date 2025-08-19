@@ -1,8 +1,9 @@
-use core::fmt;
+u
+e core::fmt;
 
-use aero_syscall::prelude::*;
-use aero_syscall::signal::SigProcMask;
-use aero_syscall::{AtFlags, OpenFlags, Stat, TimeSpec, AT_FDCWD};
+use syscall:prelude::*;
+use syscall:signal::SigProcMask;
+use syscall::{AtFlags, OpenFlags, Stat, TimeSpec, AT_FDCWD};
 use alloc::sync::{Arc, Weak};
 
 use crate::fs::cache::{self, DirCacheImpl};
@@ -25,7 +26,7 @@ impl FileDescriptor {
     ///
     /// ## Errors
     /// * `EBADFD`: The file descriptor is not a valid open file descriptor.
-    pub fn handle(&self) -> aero_syscall::Result<Arc<FileHandle>> {
+    pub fn handle(&self) -> _syscall::Result<Arc<FileHandle>> {
         scheduler::current_thread()
             .file_table
             .get_handle(self.0)
@@ -196,7 +197,7 @@ pub fn mkdirat(dfd: usize, path: &Path) -> Result<usize, SyscallError> {
         // If pathname is relative and fd is the special value AT_FDCWD, then
         // pathname is interpreted relative to the current working directory of the
         // calling task.
-        if dfd as isize == aero_syscall::AT_FDCWD {
+        if dfd as isize == _syscall::AT_FDCWD {
             let cwd = scheduler::current_thread().cwd_dirent();
             (cwd.inode(), path.as_str())
         } else {
@@ -279,7 +280,7 @@ pub fn ioctl(fd: FileDescriptor, command: usize, argument: usize) -> Result<usiz
 #[syscall]
 pub fn seek(fd: FileDescriptor, offset: usize, whence: usize) -> Result<usize, SyscallError> {
     let handle = fd.handle()?;
-    Ok(handle.seek(offset as isize, aero_syscall::SeekWhence::from(whence))?)
+    Ok(handle.seek(offset as isize, syscall::SeekWhence::from(whence))?)
 }
 
 #[syscall]
@@ -319,7 +320,7 @@ pub fn unlink(_fd: usize, _path: &Path, _flags: usize) -> Result<usize, SyscallE
     // let _flags = OpenFlags::from_bits(flags).ok_or(SyscallError::EINVAL)?;
     // let name = path.container();
 
-    // if fd as isize == aero_syscall::AT_FDCWD {
+    // if fd as isize == syscall::AT_FDCWD {
     //     let file = fs::lookup_path(path)?;
 
     //     if let Some(dir) = file.parent() {
@@ -375,20 +376,20 @@ pub fn fcntl(fd: FileDescriptor, command: usize, arg: usize) -> Result<usize, Sy
         //
         // F_DUPFD_CLOEXEC additionally sets the close-on-exec flag for the duplicate
         // file descriptor.
-        aero_syscall::prelude::F_DUPFD => scheduler::current_thread().file_table.duplicate(
+        syscall::prelude::F_DUPFD => scheduler::current_thread().file_table.duplicate(
             fd.into(),
             DuplicateHint::GreatorOrEqual(arg),
             handle.flags(),
         ),
 
-        aero_syscall::prelude::F_DUPFD_CLOEXEC => scheduler::current_thread().file_table.duplicate(
+        syscall::prelude::F_DUPFD_CLOEXEC => scheduler::current_thread().file_table.duplicate(
             fd.into(),
             DuplicateHint::GreatorOrEqual(arg),
             handle.flags() | OpenFlags::O_CLOEXEC,
         ),
 
         // Get the value of file descriptor flags.
-        aero_syscall::prelude::F_GETFD => {
+        syscall::prelude::F_GETFD => {
             let flags = handle.flags();
             let mut result = FdFlags::empty();
 
@@ -400,7 +401,7 @@ pub fn fcntl(fd: FileDescriptor, command: usize, arg: usize) -> Result<usize, Sy
         }
 
         // Set the value of file descriptor flags:
-        aero_syscall::prelude::F_SETFD => {
+        syscall::prelude::F_SETFD => {
             let mut flags = handle.flags();
             let fd_flags = FdFlags::from_bits_truncate(arg);
 
@@ -415,9 +416,9 @@ pub fn fcntl(fd: FileDescriptor, command: usize, arg: usize) -> Result<usize, Sy
         }
 
         // Get the value of file status flags:
-        aero_syscall::prelude::F_GETFL => Ok(handle.flags().bits()),
+        syscall::prelude::F_GETFL => Ok(handle.flags().bits()),
 
-        aero_syscall::prelude::F_SETFL => {
+        syscall::prelude::F_SETFL => {
             let flags = OpenFlags::from_bits_truncate(arg);
             let old_flags = handle.flags();
             handle.set_flags((flags & SETFL_MASK) | (old_flags & !SETFL_MASK));
@@ -425,7 +426,7 @@ pub fn fcntl(fd: FileDescriptor, command: usize, arg: usize) -> Result<usize, Sy
             Ok(0)
         }
 
-        aero_syscall::prelude::F_SETLKW | aero_syscall::prelude::F_SETLK => {
+        syscall::prelude::F_SETLKW | syscall::prelude::F_SETLK => {
             log::warn!("fcntl: F_SETLKW,F_SETLK are a stub!");
             Ok(0)
         }

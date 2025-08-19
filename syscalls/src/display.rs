@@ -1,6 +1,4 @@
-pub mod sessions;
 
-use _syscall::WaitPidFlags;
 use alloc::sync::{Arc, Weak};
 
 use hashbrown::HashMap;
@@ -492,4 +490,301 @@ impl Task {
             self.zombies.waitpid(&[pid as _], status, flags)
         }
     }
+
+    pub fn path(&self) -> Option<PathBuf> {
+        self.executable.lock().as_ref().map(|e| e.absolute_path())
+    }
+
+    pub fn exec(
+        &self,
+        executable: &DirCacheItem,
+
+        argv: Option<ExecArgs>,
+        envv: Option<ExecArgs>,
+    ) -> Result<(), MapToError<Size4KiB>> {
+        if self.cwd.read().is_none() {
+            *self.cwd.write() = Some(Cwd::new())
+        }
+
+        // if executable.absolute_path_str().contains("gcc")
+        //     || executable.absolute_path_str().contains("ls")
+        // {
+        // self.enable_systrace();
+        // }
+
+        *self.mem_tags.lock() = HashMap::new();
+        self.file_table.close_on_exec();
+
+        self.file_table.log();
+
+        *self.executable.lock() = Some(executable.clone());
+
+        let vm = self.vm();
+        vm.clear();
+
+        // Clear the signals that are pending for this task on exec.
+        self.signals().clear();
+
+        self.arch_task_mut().exec(vm, executable, argv, envv)
+    }
+
+    pub fn vm(&self) -> &Arc<Vm> {
+        &self.vm
+    }
+
+    /// Returns a immutable reference to the inner [ArchTask] structure.
+    pub fn arch_task(&self) -> &ArchTask {
+        unsafe { &(*self.arch_task.get()) }
+    }
+
+    /// Returns a mutable reference to the inner [ArchTask] structure.
+    pub fn arch_task_mut(&self) -> &mut ArchTask {
+        unsafe { &mut (*self.arch_task.get()) }
+    }
+
+    pub(super) fn update_state(&self, state: TaskState) {
+        if state == TaskState::Zombie {
+            // [41] syscall/net.rs:178 (tid=33, pid=33) debug [_kernel/src/syscall/net.rs:178]
+            // current_task.file_table.open_file(entry, sockfd_flags) = Ok( 17,
+            // )
+            // [41] syscall/process.rs:157 (tid=33, pid=33) debug mlibc: getsockopt() call with
+            // SOL_SOCKET and SO_TYPE is unimplemented, hardcoding SOCK_STREAM
+            // [41] syscall/process.rs:157 (tid=33, pid=33) debug mlibc: getsockopt() call with
+            // SOL_SOCKET and SO_KEEPALIVE is unimplemented, hardcoding 0 [41] syscall/
+            // process.rs:157 (tid=33, pid=33) debug mlibc: setsockopt(SO_PASSCRED) is not
+            // implemented correctly [41] socket/netlink.rs:263 (tid=33, pid=33) warn
+            // netlink::send(flags=NOSIGNAL) [41] socket/netlink.rs:228 (tid=33, pid=33)
+            // debug [_kernel/src/socket/netlink.rs:228] message_hdr.iovecs_mut() = [
+            // IoVec {
+            // base: 0x0000000000000000,
+            // len: 0,
+            // },
+            // ]
+            // [42] syscall/process.rs:157 (tid=40, pid=40) debug mlibc: sys_setuid is a stub
+            // [42] syscall/process.rs:157 (tid=40, pid=40) debug In function mlock, file
+            // ../../../bundled/mlibc/options/posix/generic/sys-mman-stubs.cpp:22
+            // __ensure(Library function fails due to missing sysdep) failed
+            // [42] syscall/process.rs:157 (tid=40, pid=40) debug mlibc: uselocale() is a no-op
+            // [42] syscall/process.rs:157 (tid=40, pid=40) debug mlibc: sys_setuid is a stub
+            // [42] syscall/process.rs:157 (tid=40, pid=40) debug mlibc: sys_seteuid is a stub
+            // [42] syscall/process.rs:157 (tid=40, pid=40) debug mlibc: sys_setgid is a stub
+            // [42] syscall/process.rs:157 (tid=40, pid=40) debug mlibc: sys_getegid is a stub
+            // [42] syscall/net.rs:178 (tid=40, pid=40) debug [_kernel/src/syscall/net.rs:178]
+            // current_task.file_table.open_file(entry, sockfd_flags) = Ok( 0,
+            // )
+            //
+            // exit err 5 Input/output error
+
+            // TODO: is_process_leader() && children.len() == 0 and then
+            // assert!(self.file_table.strong_count() == 1);
+            dbg!(Arc::strong_count(&self.file_table));
+            log::warn!(
+                "HI MOM HI MOM HI MOM HI MOM: I HAVE {} STRONG AND {} WEAK REFERENCES",
+                Weak::strong_count(&self.sref),
+                Weak::weak_count(&self.sref)
+            );
+            if Arc::strong_count(&self.file_table) == 1 {
+                self.file_table.0.read().iter().for_each(|file| {
+                    if let Some(handle) = file {
+                        handle.inode().close(handle.flags());
+                    }
+                });
+            }
+        }
+
+        // if state != TaskState::Runnable {
+        //     log::warn!(
+        //         "Task::update_state() updated the task state to {state:?}! (pid={:?}, tid={:?})",
+        //         self.pid,
+        //         self.tid
+        //     );
+
+        //     crate::unwind::unwind_stack_trace();
+        // }
+
+        self.state.store(state as _, Ordering::SeqCst);
+    }
+
+    pub fn state(&self) -> TaskState {
+        self.state.load(Ordering::SeqCst).into()
+    }
+
+    /// Returns the PID ID that was allocated for this task.
+    pub fn pid(&self) -> TaskId {
+        self.pid
+    }
+
+    pub fn parent_pid(&self) -> TaskId {
+        if let Some(parent) = self.get_parent() {
+            parent.pid()
+        } else {
+            // On top of the family tree.
+            self.pid()
+        }
+    }
+
+    pub fn tid(&self) -> TaskId {
+        self.tid
+    }
+
+    pub fn cwd_dirent(&self) -> DirCacheItem {
+        self.cwd.read().as_ref().unwrap().inode.clone()
+    }
+
+    pub fn get_cwd(&self) -> PathBuf {
+        self.cwd.read().as_ref().unwrap().inode.absolute_path()
+    }
+
+    pub fn set_cwd(&self, cwd: DirCacheItem) {
+        let filesystem = cwd.inode().weak_filesystem().unwrap().upgrade().unwrap();
+
+        self.cwd.write().as_mut().unwrap().inode = cwd;
+        self.cwd.write().as_mut().unwrap().filesystem = filesystem;
+    }
+
+    pub fn get_parent(&self) -> Option<Arc<Task>> {
+        let parent = self.parent.lock();
+        parent.clone()
+    }
+
+    pub fn wake_up(&self) {
+        scheduler::get_scheduler().wake_up(self.this())
+    }
+
+    pub fn is_process_leader(&self) -> bool {
+        self.tid() == self.pid()
+    }
+
+    pub fn process_leader(&self) -> Arc<Task> {
+        if self.is_process_leader() {
+            self.this()
+        } else {
+            let parent = self.get_parent().unwrap();
+
+            assert!(parent.is_process_leader());
+            parent
+        }
+    }
+
+    pub fn signal(&self, signal: usize) -> bool {
+        match self.signals().trigger(signal, false) {
+            TriggerResult::Triggered => {
+                self.wake_up();
+                true
+            }
+
+            TriggerResult::Ignored => false,
+
+            TriggerResult::Blocked => {
+                // Find other thread in process to notify
+                let process_leader = self.process_leader();
+
+                if !process_leader.signals().is_blocked(signal) {
+                    process_leader.wake_up();
+
+                    return true;
+                }
+
+                for c in process_leader
+                    .children
+                    .lock()
+                    .iter()
+                    .filter(|t| t.pid() == self.pid())
+                {
+                    if !c.signals().is_blocked(signal) {
+                        c.wake_up();
+
+                        return true;
+                    }
+                }
+
+                false
+            }
+        }
+    }
+
+    pub(super) fn make_zombie(&self) {
+        self.detach();
+        self.arch_task_mut().dealloc();
+
+        if let Some(parent) = self.get_parent() {
+            parent.remove_child(self);
+            parent.zombies.add_zombie(self.this());
+
+            if self.is_process_leader() {
+                parent.signal(_syscall::signal::SIGCHLD);
+            }
+        }
+    }
+
+    pub fn systrace(&self) -> bool {
+        self.systrace.load(Ordering::SeqCst)
+    }
+
+    pub fn enable_systrace(&self) {
+        self.systrace.store(true, Ordering::SeqCst);
+    }
+
+    pub fn detach(&self) {
+        let mut controlling_terminal = self.controlling_terminal.lock_irq();
+
+        if let Some(term) = controlling_terminal.as_ref() {
+            term.detach(self.sref.upgrade().unwrap());
+            *controlling_terminal = None;
+        }
+    }
+
+    pub fn attach(&self, terminal: Arc<dyn TerminalDevice>) {
+        if self.is_session_leader() {
+            terminal.attach(self.sref.upgrade().unwrap());
+            *self.controlling_terminal.lock_irq() = Some(terminal);
+        } else {
+            // FIXME: If its not the session leader then we needs to be a part of the the same
+            // session as the terminal's foreground group.
+            *self.controlling_terminal.lock_irq() = Some(terminal);
+        }
+    }
+
+    /// Returns the controlling terminal of the task.
+    pub fn controlling_terminal(&self) -> Option<Arc<dyn TerminalDevice>> {
+        self.controlling_terminal.lock_irq().clone()
+    }
+
+    /// Returns whether the task is the session leader (`pid` == `sid`).
+    pub fn is_session_leader(&self) -> bool {
+        self.session_id() == self.pid().as_usize()
+    }
+
+    /// Returns whether the task is the group leader (`pid` == `gid`).
+    pub fn is_group_leader(&self) -> bool {
+        self.group_id() == self.pid().as_usize()
+    }
+
+    /// Returns the group identifier of the task (`GID`).
+    pub fn group_id(&self) -> usize {
+        self.gid.load(Ordering::SeqCst)
+    }
+
+    /// Returns the session identifier of the task (`SID`).
+    pub fn session_id(&self) -> usize {
+        self.sid.load(Ordering::SeqCst)
+    }
+
+    /// Sets the session identifier of the task (`SID`) to `session_id`.
+    pub(super) fn set_session_id(&self, session_id: usize) {
+        self.sid.store(session_id, Ordering::SeqCst);
+    }
+
+    /// Sets the group identifier of the task (`GID`) to `group_id`.
+    pub(super) fn set_group_id(&self, group_id: usize) {
+        self.gid.store(group_id, Ordering::SeqCst);
+    }
 }
+
+// SAFETY: It's alright to access [`Task`] through references from other
+// threads because we're either accessing constant properties or properties
+// that are fully synchronized.
+unsafe impl Sync for Task {}
+
+intrusive_collections::intrusive_adapter!(pub SchedTaskAdapter = Arc<Task> : Task { link: LinkedListLink });
+intrusive_collections::intrusive_adapter!(pub TaskAdapter = Arc<Task> : Task { clink: LinkedListLink });

@@ -1,6 +1,6 @@
 use core::sync::atomic::{AtomicUsize, Ordering};
 
-use aero_syscall::{OpenFlags, SysDirEntry};
+use _syscall::{OpenFlags, SysDirEntry};
 
 use alloc::sync::Arc;
 use alloc::vec::Vec;
@@ -78,7 +78,7 @@ impl FileHandle {
         Ok(new_offset)
     }
 
-    pub fn seek(&self, off: isize, whence: aero_syscall::SeekWhence) -> super::Result<usize> {
+    pub fn seek(&self, off: isize, whence: _syscall::SeekWhence) -> super::Result<usize> {
         let meta = self
             .inode
             .inode()
@@ -88,18 +88,18 @@ impl FileHandle {
 
         if meta.file_type() == FileType::File || meta.file_type() == FileType::Device {
             match whence {
-                aero_syscall::SeekWhence::SeekSet => {
+                _syscall::SeekWhence::SeekSet => {
                     self.offset.store(off as usize, Ordering::SeqCst);
                 }
 
-                aero_syscall::SeekWhence::SeekCur => {
+                _syscall::SeekWhence::SeekCur => {
                     let mut offset = self.offset.load(Ordering::SeqCst) as isize;
                     offset += off;
 
                     self.offset.store(offset as usize, Ordering::SeqCst);
                 }
 
-                aero_syscall::SeekWhence::SeekEnd => {
+                _syscall::SeekWhence::SeekEnd => {
                     let mut offset = meta.size as isize;
                     offset += off;
 
@@ -157,7 +157,7 @@ impl FileHandle {
             let name_size = reclen - core::mem::size_of::<SysDirEntry>();
 
             let file_type = entry.inode().metadata()?.file_type();
-            let file_type: aero_syscall::SysFileType = file_type.into();
+            let file_type: _syscall::SysFileType = file_type.into();
 
             let sysd = unsafe { &mut *(buffer.as_mut_ptr().cast::<SysDirEntry>()) };
 
