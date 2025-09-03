@@ -88,7 +88,7 @@ entry:
     push @r6 (@r6+1) @r1 u16 @r7
     ldp u16 *main @r11 <> M @r12
 
-    push <M> ^<> (u32+0_2)
+    push <M> <> (u32+0_2)
     jmk *main @r5 ^*main u32 @r4 *main
     mov *block M @r1 @r11 ^@r9 ^u64 @r8
     ldp @r11 *block
@@ -111,7 +111,7 @@ entry:
     dw u8 ^u64 u64
     movk M @r8
 
-    movk @r7 ^<>
+    movk @r7 <>
 
     lsl (u8+3) @r1 @r9 u16 @r8 @r6
 
