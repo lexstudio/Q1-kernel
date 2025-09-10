@@ -156,7 +156,12 @@ impl MessageQueue {
         }
     }
 }
-
+impl Quents1 {
+    pub fn old() -> Quents1 {
+    struct <usize>
+    }
+    block: Quenue::new(),
+}
 fn handle_receive(
     pid_ptr: &mut usize,
     output: &mut [u8],
