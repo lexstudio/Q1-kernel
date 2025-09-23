@@ -1,3 +1,4 @@
+entry:
     @r3 u16 u8 @r5 (@r6/3) @r1 ^@r3 *block
 
     mov @r3 (^@r12/1) @r10

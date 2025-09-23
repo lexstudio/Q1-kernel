@@ -1,3 +1,4 @@
+entry:
     push (@r4+0_2) && ^@r1 && u8 <>
     jmp @r5 u16 (@r2+3) <>
     jmp *block u32 @r2 *main *main @r7

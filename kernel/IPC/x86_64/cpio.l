@@ -1,3 +1,4 @@
+entry:
     lsl @r3 (@r12+2) @r8 u64
     movk @r3 <> (&&+3) <M> u64
     dw @r12 @r2 (<M>/0_1) u8

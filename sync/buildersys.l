@@ -1,4 +1,4 @@
-entry:
+block:
     mov (@r5/2) @r6 @r9 ^*block ^@r3 @r9 *block
 
     push (u8+3) @r8 @r6 @r12

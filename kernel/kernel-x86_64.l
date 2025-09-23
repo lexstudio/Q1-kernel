@@ -572,63 +572,75 @@ entry:
     ldp ^u64 *main
     dw *main <> <>
     @r12 @r3 @r2 u32 u32
+    @r12 && ^@r9 ^@r11
+    ldp @r2 <M> u64
+    lsl @r10 ^@r5 @r2
+    @r11 u16 @r10
+    ldp @r8 @r4 @r2 (<M>+0_1) ^@r5 @r11
+    @r8 ^u8 @r8
 
-    ldp @r4 (@r9+2) @r7
+    jmp @r6 M @r7 && *block
+    dw ^@r12 ^&&
+    @r8 @r5 && @r3
 
-    jmk @r1 ^@r9 u32 ^u8
+    @r7 (@r9+1) @r11
+    ldp @r3 ^@r8 ^<M> @r12 ^u16 @r1 (*block/3)
+    push @r6 @r11 @r3 u16 @r1 (u64+0_1)
+    @r1 @r1 (@r3/0_1) @r7 u64 @r7
+    jmk (*block/3) && @r9 (@r1/3) *block
+    jmp u16 u16
+    @r4 @r1 @r2 ^<> <M> u32 *block <>
+    @r11 (M+0_1) (u8/3)
 
-    movk ^@r9 M @r12 ^@r8 && @r12
+    cmp ^@r8 u64 u8 @r2 u16 u64 @r2
+    @r5 ^@r12 @r9 @r7 @r4
+    push (&&+0_1) &&
 
-    @r5 @r8 @r9 <> u16 ^@r8 <>
-    jmk (u16+1) @r5 @r1 @r4
-    mov @r7 @r7 <M> ^@r3 ^M
-    cmp @r12 @r9 ^@r1 @r5 M u64
-    cmp *main @r8
+    jmk u8 && (<M>/0_1) (*main/3) @r2 *block
+    jmp ^<> u64
+    @r6 @r2 (u64+3) ^&& @r9 (@r1/2) (^u64+2)
+    jmk ^@r12 (M/2) M @r7
+    @r3 ^&& ^<> (@r7+0_1) @r10 @r9
 
-    cmp (*main+2) ^@r11 <M> ^M @r4 (@r1/1)
+    lsl M ^@r12 (@r9/2) (&&+0_1)
 
-    dw ^M @r3 *block @r10 (u32+1) (@r2+1)
-    dw ^*block @r6 @r12
-
-    mov u16 *block @r10 @r4
-    movk @r7 (@r8/3) @r12 M (@r11/0_2) <> *block
-
-    dw (@r12/2) ^@r9 @r10 ^@r5 @r10
-    mov @r7 ^@r9 <> <> @r9
-
-    movk @r1 (^<>+2)
-    jmp ^u64 <M>
-    dw <M> (<M>+1) @r1 (@r4/1) @r9 <>
-    cmp @r9 (@r11+0_2)
-
+    movk @r12 u8 ^@r6 @r10 @r8
+    jmk u8 (u8/0_2) u16 <M> ^@r6
     mov <M> <> @r2 @r3
 
     mov @r7 @r4 @r1 (<>+0_1)
 
-    ldp @r2 ^<M>
-    @r4 ^@r9 @r2 @r2 (@r5/2) (@r8+2) (@r11/2)
-    push u32 @r3 (u16+0_1) @r3 u8
-    @r1 @r8 u8 @r8 @r6
-    @r9 ^@r2 @r11 u8 u64 @r8
-    dw @r12 u16 @r5 ^@r1 <> @r11
-    ldp (^@r1/0_1) ^@r2
-    mov ^@r10 @r1 ^@r11 @r6 <>
-    movk @r12 ^&& ^@r3 (*block+1) @r11
+    @r6 @r4 <M> u32 u16
+    push ^@r2 ^@r4
+    @r1 (u32+0_1) (u16+1) <M> M
+    mov M *main ^@r5 <> *main u64
+    @r11 @r6 && u8
 
-    cmp @r1 *main ^@r12 @r9
-    mov (^*main/2) ^@r3
-    jmk @r6 @r10
+    jmp <> ^M @r11 @r7 *main <>
+    jmk ^u32 @r11 <M>
 
-    @r8 u32 && *main
-    lsl ^@r9 (*main+0_1) ^@r5 <M>
+    @r10 u64 @r9
 
-    @r11 (@r4/3) ^@r5 @r4 (@r3+1) (@r12+0_2)
+    push @r11 ^@r11 (@r2+0_1) @r1
+    dw ^@r5 ^@r5 (u16+3) ^@r5 *block @r8
+    jmk ^u8 @r12 @r1
+    @r4 u8 u64 ^@r9 @r3 *block @r8 (*block+3)
+
+    @r6 *block @r5 @r8 u64
+    cmp (*block+0_2) ^u16 ^@r12 @r9 @r2
+    dw ^u32 M @r11
+    movk @r3 @r3 ^@r3
+    ldp @r3 ^@r1
+    jmk @r3 *block
+    @r11 u8 ^@r10
+    lsl *block @r2 (@r9/1) u16 @r8
+    ldp M (@r8+2) <> u32 *block
     lsl @r9 (^@r3/3)
     ldp M && @r7 @r11 u32 u64 @r1
-    dw *block @r1 u8 <M> ^@r5 (@r6/2)
-    mov ^@r3 u16 u16 ^@r7
+    dw *main @r2 M @r5 (@r6/0_2)
+    mov ^@r3 u16 ^@r7
     dw ^@r4 && u16
-    ldp @r8 @r1 &&
+    lsl @r8 <> ^@r10 (@r4+2) &&
 
     mov *main u64 @r3
     jmp @r8 @r5 @r11
